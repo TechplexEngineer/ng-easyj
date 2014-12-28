@@ -77,3 +77,15 @@ body {
     border-bottom: 0;
   }
 }
+
+/*navbar*/
+.notext.iconbar {
+  margin-left:5px;
+}
+.notext.iconbar i.fa {
+  margin-top: 5px;
+  color: white;
+}
+.notext.iconbar i.fa:hover {
+  color: gray;
+}

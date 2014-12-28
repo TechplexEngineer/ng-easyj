@@ -10,7 +10,7 @@
 angular.module('ngEasyjApp')
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
-      'HTML5 Boilerplate',
+      'HTML5 Boilerplate4',
       'AngularJS',
       'Karma'
     ];
