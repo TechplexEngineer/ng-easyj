@@ -1,0 +1,55 @@
+<h1>Drivetrain</h1>
+<ul>
+	<li>{{wiz.hasDrivetrain}}</li>
+	<li>{{wiz.numWheels}} </li>
+</ul>
+
+<ol>
+	<li>
+		Does your robot have a drivetrain?
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="wiz.hasDrivetrain" value="yes">
+				Yes, it has wheels!
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="wiz.hasDrivetrain" value="no">
+				No, its stationary.
+			</label>
+		</div>
+	</li>
+	<li ng-show="wiz.hasDrivetrain == 'no'">
+		<!-- No -->
+		<a class="btn btn-primary" href="#/wizard/2">Next &raquo;</a>
+	</li>
+	<li ng-show="wiz.hasDrivetrain == 'yes'">
+		<!-- Yes -->
+		How many motors does it use?
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="wiz.numWheels" value="2">
+				2 motors
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="wiz.numWheels" value="4">
+				4 motors
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="wiz.numWheels" value="6">
+				6 motors
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="wiz.numWheels" value="8">
+				8 motors
+			</label>
+		</div>
+	</li>
+</ol>

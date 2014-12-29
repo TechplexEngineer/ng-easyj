@@ -12,7 +12,7 @@
 			</a>
 		</div>
 		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav" ng-show="isIDE">
 
 				<!-- @NOTE: The .. after the name of the option is included when that option opens a new modal window.-->
 				<li class="dropdown"> <!-- File menu -->
@@ -52,16 +52,16 @@
 			</ul>
 			<div class="pull-right" style="margin-top:8px;">
 
-				<a href="#help" class="notext iconbar" title="Help" data-toggle="modal">
+				<a href="#help" class="notext iconbar" title="Help" data-toggle="modal" ng-show="isIDE">
 					<i class="fa fa-info-circle fa-2x"></i>
 				</a>
 				<a href="http://files.team5122.com/javadoc/" class="notext iconbar" title="WPI Robotics Library Documentation" target="_blank">
 					<i class="fa fa-book fa-2x"></i>
 				</a>
-				<a href="#save" class="notext iconbar" title="Save" data-toggle="modal">
+				<a href="#save" class="notext iconbar" title="Save" data-toggle="modal" ng-show="isIDE">
 					<i class="fa fa-save fa-2x"></i>
 				</a>
-				<a href="#download" class="notext iconbar" title="Download" data-toggle="modal">
+				<a href="#download" class="notext iconbar" title="Download" data-toggle="modal" ng-show="isIDE">
 					<i class="fa fa-download fa-2x"></i>
 				</a>
 				<a href="http://team5122.com" class="notext iconbar" title="Team5122 Homepage" target="_blank">

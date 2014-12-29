@@ -1,8 +1,8 @@
 /* Space out content a bit */
-body {
+/*body {
   padding-top: 20px;
   padding-bottom: 20px;
-}
+}*/
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
@@ -32,11 +32,11 @@ body {
 }
 
 /* Customize container */
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   .container {
     max-width: 730px;
   }
-}
+}*/
 .container-narrow > hr {
   margin: 30px 0;
 }
@@ -88,4 +88,26 @@ body {
 }
 .notext.iconbar i.fa:hover {
   color: gray;
+}
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+/* A link that has no indication except hover that its a link*/
+.stealthlink, .stealthlink:hover {
+  text-decoration: none;
+  color:black;
+}
+
+/* make the footer stick to the bottom of the screen */
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.content {
+  flex: 1;
 }
