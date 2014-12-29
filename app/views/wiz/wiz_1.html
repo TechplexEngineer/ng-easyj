@@ -22,7 +22,7 @@
 	</li>
 	<li ng-show="wiz.hasDrivetrain == 'no'">
 		<!-- No -->
-		<a class="btn btn-primary" href="#/wizard/2">Next &raquo;</a>
+		<a class="btn btn-primary" href ng-click="wiz.next()">Next &raquo;</a>
 	</li>
 	<li ng-show="wiz.hasDrivetrain == 'yes'">
 		<!-- Yes -->

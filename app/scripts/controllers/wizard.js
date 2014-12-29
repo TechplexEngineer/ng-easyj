@@ -8,7 +8,8 @@
  * Controller of the ngEasyjApp
  */
 angular.module('ngEasyjApp')
-  .controller('WizardCtrl', function ($stateParams,$window) {
+  .controller('WizardCtrl', function ($stateParams,$window,$scope) {
+  	console.log("Wiz");
   	var wiz = this;
 
   	if (!$stateParams.step) {
@@ -32,4 +33,9 @@ angular.module('ngEasyjApp')
   		}
   		return out;
   	}
+  	wiz.next = function() {
+  		wiz.step ++;
+  		$window.location.href = '#/wizard/'+wiz.step;
+  	}
+
   });
