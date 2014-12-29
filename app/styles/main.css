@@ -111,3 +111,9 @@ body {
 .content {
   flex: 1;
 }
+/* http://stackoverflow.com/a/24008735 */
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}

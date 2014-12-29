@@ -1,96 +1,112 @@
 <h1>Drivetrain</h1>
-<ol>
-	<li>
-		Does your robot have a drivetrain?
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.hasDrivetrain" value="yes">
-				Yes, it has wheels!
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.hasDrivetrain" value="no">
-				No, its stationary.
-			</label>
-		</div>
-	</li>
-	<li ng-show="wiz.hasDrivetrain == 'no'">
-		<!-- No -->
-		<a class="btn btn-primary" href ng-click="wiz.next()">Next &raquo;</a>
-	</li>
-	<li ng-show="wiz.hasDrivetrain == 'yes'">
-		<!-- Yes -->
-		How many motors does it use?
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.numMotors" value="2">
-				2 motors
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.numMotors" value="4">
-				4 motors
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.numMotors" value="6">
-				6 motors
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.numMotors" value="8">
-				8 motors
-			</label>
-		</div>
-	</li>
-	<li ng-show="wiz.numMotors">
-		What type of motor controllers will be used?
-		<div class="form-group">
-			<select ng-model="wiz.speedController">
-				<option value="victor">Victor</option>
-				<option value="talon">Talon</option>
-				<option value="jaguar">Jaguar</option>
-				<option value="talonsrx">Talon SRX</option>
-				<option value="victorsp">Victor SP</option>
-			</select>
+<div class="row">
+	<ol class="col-lg-4">
+		<li>
+			Does your robot have a drivetrain?
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.hasDrivetrain" value="yes">
+					Yes, it has wheels!
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.hasDrivetrain" value="no">
+					No, its stationary.
+				</label>
+			</div>
+		</li>
+		<li ng-show="wiz.hasDrivetrain == 'no'">
+			<!-- No -->
+			<a class="btn btn-primary" href ng-click="wiz.next()">Next &raquo;</a>
+		</li>
+		<li ng-show="wiz.hasDrivetrain == 'yes'">
+			<!-- Yes -->
+			How many motors does it use?
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.numMotors" value="2">
+					2 motors
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.numMotors" value="4">
+					4 motors (use this for 6 or 8 wheel drive)
+				</label>
+			</div>
+			<!-- <div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.numMotors" value="6">
+					6 motors
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.numMotors" value="8">
+					8 motors
+				</label>
+			</div> -->
+		</li>
+		<li ng-show="wiz.numMotors">
+			What type of motor controllers will be used?
+			<div class="form-group" >
+				<select ng-model="wiz.speedController" class="form-control">
+					<option value="victor">Victor</option>
+					<option value="talon">Talon</option>
+					<option value="jaguar">Jaguar</option>
+					<option value="talonsrx">Talon SRX</option>
+					<option value="victorsp">Victor SP</option>
+				</select>
 
-		</div>
-	</li>
-	<li ng-show="wiz.speedController">
-		Port Asiginment
-		{{wiz.speedController}}
-		<div ng-repeat="controller in [] | range:0:wiz.numMotors">
-			<input type="text" placeholder="name">
-			<select ng-model="wiz.controllers[controller]" ng-options="n for n in [] | range:0:wiz.brain.numPWM">
-				<option value="">Choose a port</option>
-			</select>
+			</div>
+		</li>
+		<li ng-show="wiz.speedController">
+			What type of driving will you be doing? {{wiz.numMotors}}
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.driveType" value="arcade">
+					arcade drive
+				</label>
+			</div>
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="wiz.driveType" value="tank">
+					tank drive
+				</label>
+			</div>
+			<div class="radio" ng-show="wiz.numMotors == 4 || wiz.numMotors == 8"> <!-- this might be a dumb assumption -->
+				<label>
+					<input type="radio" ng-model="wiz.driveType" value="mecanum">
+					mecanum drive
+				</label>
+			</div>
+		</li>
+		<li ng-show="wiz.driveType">
+			Port Asiginment
 
-		</div>
+			<div class="form-group" ng-repeat="(idx, cname) in ['left','right']" ng-show="wiz.numMotors == 2">
+				<input class="form-control form-control-inline" type="text" value="{{cname}}">
+				<select class="form-control form-control-inline" ng-model="wiz.controllers[idx]" ng-options="n for n in [] | range:0:wiz.brain.numPWM">
+					<option value="">Choose a port</option>
+				</select>
+			</div>
+
+			<div class="form-group" ng-repeat="(idx, cname) in ['frontLeft','rearLeft','frontRight','rearRight']" ng-show="wiz.numMotors == 4">
+				<input class="form-control form-control-inline" type="text" value="{{cname}}">
+				<select class="form-control form-control-inline" ng-model="wiz.controllers[idx]" ng-options="n for n in [] | range:0:wiz.brain.numPWM">
+					<option value="">Choose a port</option>
+				</select>
+			</div>
+
+			<div class="form-group" ng-repeat="(idx, cname) in ['frontLeft','midLeft',rearLeft','frontRight','midRight','rearRight']" ng-show="wiz.numMotors == 6">
+				<input class="form-control form-control-inline" type="text" value="{{cname}}">
+				<select class="form-control form-control-inline" ng-model="wiz.controllers[idx]" ng-options="n for n in [] | range:0:wiz.brain.numPWM">
+					<option value="">Choose a port</option>
+				</select>
+			</div>
+
+		</li>
 		
-	</li>
-	<li ng-show="">
-		What type of driving will you be doing? {{wiz.numMotors}}
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.driveType" value="arcade">
-				arcade drive
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="wiz.driveType" value="tank">
-				tank drive
-			</label>
-		</div>
-		<div class="radio" ng-show="wiz.numMotors == 4 || wiz.numMotors == 8"> <!-- this might be a dumb assumption -->
-			<label>
-				<input type="radio" ng-model="wiz.driveType" value="mecanum">
-				mecanum drive
-			</label>
-		</div>
-	</li>
-</ol>
+	</ol>
+</div>
