@@ -11,6 +11,11 @@ angular.module('ngEasyjApp')
   .controller('WizardCtrl', function ($stateParams,$window,$scope) {
   	console.log("Wiz");
   	var wiz = this;
+  	//constants for the RoboRio controller
+  	wiz.brain = {
+  		numPWM: 10
+  	};
+  	wiz.controllers = {};
 
   	if (!$stateParams.step) {
   		$window.location.href = '#/wizard/1';
@@ -36,6 +41,14 @@ angular.module('ngEasyjApp')
   	wiz.next = function() {
   		wiz.step ++;
   		$window.location.href = '#/wizard/'+wiz.step;
+  	}
+  	wiz.getControllers = function() {
+  		var out = [];
+  		for (var i = 0; i < wiz.numMotors; i++) {
+  			out.push({
+
+  			});
+  		};
   	}
 
   });

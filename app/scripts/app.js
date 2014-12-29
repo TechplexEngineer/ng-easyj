@@ -17,7 +17,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.router'
+    'ui.router',
+    'Filters'
   ])
   // .run(function($rootScope) {
   //     $rootScope.isIDE = false;
@@ -53,3 +54,15 @@ angular
 
       $urlRouterProvider.otherwise('/');
   });
+
+String.prototype.padLeft = function (l, c) { return Array(l - this.length + 1).join(c || " ") + this }
+angular.module('Filters', []).
+    filter('range', function () {
+        return function (input, min, max) {
+            min = parseInt(min); //Make string input int
+            max = parseInt(max);
+            for (var i = min; i < max; i++)
+                input.push(i.toString().padLeft(2, "0"));
+            return input;
+        };
+    });
