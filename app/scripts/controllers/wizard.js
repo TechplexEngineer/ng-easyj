@@ -66,37 +66,25 @@ angular.module('ngEasyjApp')
 
 		//----------------------------------------------------------------------
 		wiz.step1 = {};
-
-		wiz.step1.getControllerNames = function() {
-			var out = [];
-			if (wiz.robot.numMotors == 2) {
-				out = ['left','right'];
-			} else if (wiz.robot.numMotors == 4) {
-				out = ['frontLeft','rearLeft','frontRight','rearRight'];
-			} else if (wiz.robot.numMotors == 6) {
-				out = ['frontLeft','midLeft','rearLeft','frontRight','midRight','rearRight'];
-			}
-			return out;
-		};
-		wiz.step1.getPWM = function() {
+		wiz.step1.getNumPWM = function() {
 			return _.range(0, wiz.brain.numPWM);
 		};
 
 		wiz.step1.isPWMUsed = function(n) {
 			var out = false;
-			for (var property in wiz.robot.controllers) {
-				if (wiz.robot.controllers.hasOwnProperty(property)) {
-					if (wiz.robot.controllers[property] == n) {
-						out = true;
-						break;
-					}
+			n=n.toString();
+			for (var i = 0; i < wiz.robot.controllers.length; i++) {
+				if (wiz.robot.controllers[i].port === n) {
+					out = true;
+					break;
 				}
-			}
+			};
 			return out;
 		};
 
 		wiz.step1.numMotorsChange = function (){
-
+			console.log("here");
+			wiz.robot.controllers = [];
 			var controllers = [];
 			if (wiz.robot.numMotors == 2) {
 				controllers = ['left','right'];
@@ -106,6 +94,7 @@ angular.module('ngEasyjApp')
 			// else if (wiz.robot.numMotors == 6) {
 			// 	controllers = ['frontLeft','midLeft','rearLeft','frontRight','midRight','rearRight'];
 			// }
+			console.log(wiz.robot.numMotors, controllers);
 			for (var i = 0; i < controllers.length; i++) {
 				var con = _.clone(EMPTY_CON);
 				con.name = controllers[i];
@@ -117,16 +106,16 @@ angular.module('ngEasyjApp')
 
 		//----------------------------------------------------------------------
 		wiz.step2 = {};
+
 		wiz.step2.isSolPortUsed = function(n) {
 			var out = false;
-			for (var property in wiz.robot.solenoids) {
-				if (wiz.robot.solenoids.hasOwnProperty(property)) {
-					if (wiz.robot.solenoids[property] == n) {
-						out = true;
-						break;
-					}
+			n=n.toString();
+			for (var i = 0; i < wiz.robot.solenoids.length; i++) {
+				if (wiz.robot.solenoids[i].port === n) {
+					out = true;
+					break;
 				}
-			}
+			};
 			return out;
 		};
 		wiz.step2.getNumSolPorts = function() {

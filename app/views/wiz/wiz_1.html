@@ -48,7 +48,7 @@
 				</div>
 				<div class="radio">
 					<label>
-						<input type="radio" ng-model="wiz.robot.numMotors" value="4">
+						<input type="radio" ng-model="wiz.robot.numMotors" value="4" required ng-change="wiz.step1.numMotorsChange()">
 						4 motors (also for 6 or 8 wheel drive)
 					</label>
 				</div>
@@ -76,11 +76,11 @@
 				</div>
 			</li>
 			<li ng-show="wiz.robot.driveType && wiz.robot.hasDrivetrain == 'yes'">
-				Port Asiginment
+				What ports are your motors connected to?
 				<table class="table">
 					<thead>
 						<th>Motor Name</th>
-						<th>PWM Port</th>
+						<th> <abbr title="Pulse Width Modulation - Used for motor control">PWM</abbr> Port</th>
 						<th>Type</th>
 					</thead>
 					<tbody>
@@ -93,7 +93,7 @@
 								<option value="">Choose a port</option>
 								<option
 									value="{{idx}}"
-									ng-repeat="(idx, name) in wiz.step1.getPWM()"
+									ng-repeat="(idx, name) in wiz.step1.getNumPWM()"
 									ng-disabled="wiz.step1.isPWMUsed(idx)">
 								{{idx}} {{wiz.step1.isPWMUsed(idx)? 'used' : ''}}</option>
 								</select>
@@ -102,25 +102,6 @@
 								?
 							</td>
 						</tr>
-						<!-- <tr ng-repeat="(ctrl_idx, ctrl_name) in wiz.step1.getControllerNames()">
-						{{ctrl_idx}} {{ctrl_name}}
-							<td>
-							<input required class="form-control form-control-inline" type="text" ng-model="wiz.robot.controllers[ctrl_idx].name">
-						</td>
-							<td>
-								<select required class="pa form-control form-control-inline" ng-model="wiz.robot.controllers[ctrl_idx].port">
-								<option value="">Choose a port</option>
-								<option
-									value="{{idx}}"
-									ng-repeat="(idx, name) in wiz.step1.getPWM()"
-									ng-disabled="wiz.step1.isPWMUsed(idx)">
-								{{idx}} {{wiz.step1.isPWMUsed(idx)? 'used' : ''}}</option>
-								</select>
-							</td>
-							<td>
-								?
-							</td>
-						</tr> -->
 					</tbody>
 				</table>
 			</li>
@@ -135,6 +116,5 @@
 		<pre>
 {{wiz.robot | json:4}}
 		</pre>
-		{{wiz.step1.getControllerNames()}}
 	</div>
 </div>

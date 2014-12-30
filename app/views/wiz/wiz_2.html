@@ -18,8 +18,8 @@
 					</label>
 				</div>
 			</li>
-			<li>
-			<button ng-click="wiz.step2.addSolenoid()" class="btn btn-success pull-right">Add</button>
+			<li ng-show="wiz.robot.hasPneumatics == 'yes'">
+				<button ng-click="wiz.step2.addSolenoid()" class="btn btn-success pull-right">Add</button>
 				What solenoids(pneumatic valves) are connected to your <abbr title="Pneumatic Control Module">PCM</abbr>?
 
 				<table class="table">
@@ -35,13 +35,13 @@
 								<input ng-model="item.name" required type="text" class="form-control form-control-inline">
 							</td>
 							<td>
-								<select ng-model="item.port" required class="pa form-control form-control-inline" >
+								<select ng-model="item.port" required class="form-control form-control-inline" >
 									<option value="">Choose a port</option>
 									<option
 										value="{{idx}}"
 										ng-repeat="(idx, name) in wiz.step2.getNumSolPorts()"
 										ng-disabled="wiz.step2.isSolPortUsed(idx)">
-									{{idx}} {{wiz.step2.isSolUsed(idx)? 'used' : ''}}</option>
+									{{idx}} {{wiz.step2.isSolPortUsed(idx)? 'used' : ''}}</option>
 								</select>
 							</td>
 							<td>
@@ -56,33 +56,6 @@
 
 							</td>
 						</tr>
-
-
-
-	<!-- 					<tr ng-repeat="(sol_idx, name) in wiz.step2.getNumSolenoids()" ng-show="false">
-							<td>
-								<input type="text" class="form-control form-control-inline" value="{{name}}">
-							</td>
-							<td>
-								<select required class="pa form-control form-control-inline" ng-model="wiz.robot.solenoids[name]">
-									<option value="">Choose a port</option>
-									<option
-										value="{{idx}}"
-										ng-repeat="(idx, name) in wiz.step2.getNumSolPorts()"
-										ng-disabled="wiz.step2.isSolPortUsed(idx)">
-									{{idx}} {{wiz.step2.isSolUsed(idx)? 'used' : ''}}</option>
-								</select>
-							</td>
-							<td>
-								<select class="form-control form-control-inline">
-									<option value="single">Single Solenoid (Spring return)</option>
-									<option value="double">Dobule Solenoid (Stays in place)</option>
-								</select>
-							</td>
-							<td>
-								<button class="btn btn-danger" ng-click="wiz.step2.removeSolenoid(sol_name)">Remove</button>
-							</td>
-						</tr> -->
 					</tbody>
 				</table>
 			</li>
