@@ -1,5 +1,7 @@
 'use strict';
 
+//@todo check names to make sure they are java safe (can't start with a number)
+
 /**
  * @ngdoc function
  * @name ngEasyjApp.controller:StartCtrl
@@ -14,10 +16,23 @@ angular.module('ngEasyjApp')
 		wiz.brain = {
 			numPWM: 10,
 			numSol: 8,
+			ds: {
+				numUSB:4
+			},
+			sensors: {
+				numAnalog:4,
+				numDigital:10,
+			},
+			numRelay: 4
 		};
+		//empty templates
 		var EMPTY_SOL = {name:'',port:'',type:''};
-		var EMPTY_CON = {name:'',port:'',type:''};
+		var EMPTY_CON = _.clone(EMPTY_SOL);
+		var EMPTY_HID = _.clone(EMPTY_SOL);
+		var EMPTY_AIO = _.clone(EMPTY_SOL);
+		var EMPTY_DIO = _.clone(EMPTY_SOL);
 
+		//the data about the user's robot stored here
 		wiz.robot = {
 			//step 1
 			hasDrivetrain: undefined,
@@ -29,9 +44,13 @@ angular.module('ngEasyjApp')
 			//step 2
 			solenoids: [_.clone(EMPTY_SOL)],
 			hasPneumatics: undefined,
-		}
-		// wiz.controllers = {};
-		// wiz.solenoids = {};
+
+			hids: [{name:'JS1',port:'',type:''}],
+			sensors:{
+				analog: [],
+				digital: [],
+			}
+		};
 
 		// if (!$stateParams.step) {
 		// 	$window.location.href = '#/wizard/1';
@@ -42,7 +61,7 @@ angular.module('ngEasyjApp')
 			return s == wiz.step;
 		};
 
-		wiz.getClass = function(s) {
+		wiz.getProgressClass = function(s) {
 			var out = 'disabled';
 			if (wiz.step > s){
 				out = 'complete';
@@ -54,13 +73,9 @@ angular.module('ngEasyjApp')
 			return out;
 		};
 
-		// wiz.next = function() {
-		// 	wiz.step ++;
-		// 	$window.location.href = '#/wizard/'+wiz.step;
-		// };
-
+		//navigate to a different step
 		wiz.goto = function(s) {
-			wiz.step = s
+			wiz.step = s;
 			$window.location.href = '#/wizard/'+wiz.step;
 		};
 
@@ -78,12 +93,11 @@ angular.module('ngEasyjApp')
 					out = true;
 					break;
 				}
-			};
+			}
 			return out;
 		};
 
 		wiz.step1.numMotorsChange = function (){
-			console.log("here");
 			wiz.robot.controllers = [];
 			var controllers = [];
 			if (wiz.robot.numMotors == 2) {
@@ -94,7 +108,7 @@ angular.module('ngEasyjApp')
 			// else if (wiz.robot.numMotors == 6) {
 			// 	controllers = ['frontLeft','midLeft','rearLeft','frontRight','midRight','rearRight'];
 			// }
-			console.log(wiz.robot.numMotors, controllers);
+
 			for (var i = 0; i < controllers.length; i++) {
 				var con = _.clone(EMPTY_CON);
 				con.name = controllers[i];
@@ -115,7 +129,7 @@ angular.module('ngEasyjApp')
 					out = true;
 					break;
 				}
-			};
+			}
 			return out;
 		};
 		wiz.step2.getNumSolPorts = function() {
@@ -131,8 +145,86 @@ angular.module('ngEasyjApp')
 		wiz.step2.removeSolenoid = function(item) {
 			wiz.robot.solenoids = wiz.robot.solenoids.filter(function(el){
 				return el !== item;
-			})
+			});
+		};
+		//----------------------------------------------------------------------
+		wiz.step3 = {};
+		wiz.step3.getNumUSBPorts = function() {
+			return _.range(0, wiz.brain.ds.numUSB);
+		};
+		wiz.step3.isUSBPortUsed = function(n) {
+			var out = false;
+			n=n.toString();
+			for (var i = 0; i < wiz.robot.hids.length; i++) {
+				if (wiz.robot.hids[i].port === n) {
+					out = true;
+					break;
+				}
+			}
+			return out;
+		};
+		wiz.step3.addHID = function() {
+			if (wiz.robot.hids.length < wiz.brain.ds.numUSB) {
+				wiz.robot.hids.push(_.clone(EMPTY_HID));
+			}
+		};
+		wiz.step3.removeHID = function(item) {
+			wiz.robot.hids = wiz.robot.hids.filter(function(el){
+				return el !== item;
+			});
+		};
+		//----
+		
+		wiz.step3.getNumAnalogPorts = function() {
+			return _.range(0, wiz.brain.sensors.numAnalog);
+		};
+		wiz.step3.isAnalogPortUsed = function(n) {
+			var out = false;
+			n=n.toString();
+			for (var i = 0; i < wiz.robot.sensors.analog.length; i++) {
+				if (wiz.robot.sensors.analog[i].port === n) {
+					out = true;
+					break;
+				}
+			}
+			return out;
+		};
+		wiz.step3.addAnalogSensor = function() {
+			if (wiz.robot.sensors.analog.length < wiz.brain.sensors.numAnalog) {
+				wiz.robot.sensors.analog.push(_.clone(EMPTY_AIO));
+			}
+		};
+		wiz.step3.removeAnalogSensor = function(item) {
+			wiz.robot.sensors.analog = wiz.robot.sensors.analog.filter(function(el){
+				return el !== item;
+			});
 		};
 
+		//----
+		
+		wiz.step3.getNumDigitalPorts = function() {
+			return _.range(0, wiz.brain.sensors.numDigital);
+		};
+		wiz.step3.isDigitalPortUsed = function(n) {
+			var out = false;
+			n=n.toString();
+			for (var i = 0; i < wiz.robot.sensors.digital.length; i++) {
+				if (wiz.robot.sensors.digital[i].port === n) {
+					out = true;
+					break;
+				}
+			}
+			return out;
+		};
+		wiz.step3.addDigitalSensor = function() {
+			if (wiz.robot.sensors.digital.length < wiz.brain.sensors.numDigital) {
+				wiz.robot.sensors.digital.push(_.clone(EMPTY_AIO));
+			}
+		};
+		wiz.step3.removeDigitalSensor = function(item) {
+			wiz.robot.sensors.digital = wiz.robot.sensors.digital.filter(function(el){
+				return el !== item;
+			});
+		};
 
 	});
