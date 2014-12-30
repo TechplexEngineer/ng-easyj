@@ -15,6 +15,7 @@ angular.module('ngEasyjApp')
 			numPWM: 10,
 			numSol: 8,
 		};
+		var EMPTY_SOL = {name:'',port:'',type:''};
 
 		wiz.robot = {
 			//step 1
@@ -24,12 +25,7 @@ angular.module('ngEasyjApp')
 			driveType: undefined,
 			controllers: {},
 			//step 2
-			solenoids: [
-				{
-					name:'',
-					port:'',
-					type:''
-				}],
+			solenoids: [_.clone(EMPTY_SOL)],
 			hasPneumatics: undefined,
 		}
 		// wiz.controllers = {};
@@ -126,11 +122,13 @@ angular.module('ngEasyjApp')
 			return _.range(0, num);
 		};
 		wiz.step2.addSolenoid = function() {
-			wiz.robot.solenoids['changeme'] = "";
+			wiz.robot.solenoids.push(_.clone(EMPTY_SOL));
 		};
 
-		wiz.step2.removeSolenoid = function() {
-			//@todo
+		wiz.step2.removeSolenoid = function(item) {
+			wiz.robot.solenoids = wiz.robot.solenoids.filter(function(el){
+				return el !== item;
+			})
 		};
 		
 

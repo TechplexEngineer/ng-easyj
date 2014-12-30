@@ -1,7 +1,7 @@
 <h1>Outputs</h1>
 <div class="row">
 	<form name="outputs" novalidate>
-		<ol class="col-lg-4">
+		<ol class="col-lg-6">
 
 			<li>
 				Does your robot use <abbr title="air pressure">pneumatics</abbr>?
@@ -19,11 +19,13 @@
 				</div>
 			</li>
 			<li>
+			<button ng-click="wiz.step2.addSolenoid()" class="btn btn-success pull-right">Add</button>
 				What solenoids(pneumatic valves) are connected to your <abbr title="Pneumatic Control Module">PCM</abbr>?
+
 				<table class="table">
 					<thead>
 						<th>Name</th>
-						<th>Port</th>
+						<th>PCM Port</th>
 						<th>Type</th>
 						<th>Action</th>
 					</thead>
@@ -44,18 +46,20 @@
 							</td>
 							<td>
 								<select ng-model="item.type" class="form-control form-control-inline">
+									<option value="">Choose a Solenoid type</option>
 									<option value="single">Single Solenoid (Spring return)</option>
 									<option value="double">Dobule Solenoid (Stays in place)</option>
 								</select>
 							</td>
 							<td>
-								<button ng-hide="$first && wiz.robot.solenoids.length < 2" ng-click="wiz.step2.removeSolenoid(item)" class="btn btn-danger" >Remove</button>
+								<button ng-click="wiz.step2.removeSolenoid(item)" class="btn btn-danger" >Remove</button>
+
 							</td>
 						</tr>
 
 
 
-						<tr ng-repeat="(sol_idx, name) in wiz.step2.getNumSolenoids()" ng-show="false">
+	<!-- 					<tr ng-repeat="(sol_idx, name) in wiz.step2.getNumSolenoids()" ng-show="false">
 							<td>
 								<input type="text" class="form-control form-control-inline" value="{{name}}">
 							</td>
@@ -78,13 +82,17 @@
 							<td>
 								<button class="btn btn-danger" ng-click="wiz.step2.removeSolenoid(sol_name)">Remove</button>
 							</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 			</li>
-			<li>
-				{{wiz.robot}}
-			</li>
 		</ol>
 	</form>
+	<div class="col-lg-4">
+		<h4>debugging info:</h4>
+		<pre>
+{{wiz.robot | json:4}}
+		</pre>
+		{{wiz.step1.getControllerNames()}}
+	</div>
 </div>
