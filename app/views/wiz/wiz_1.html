@@ -21,35 +21,8 @@
 				<!-- No -->
 				<a class="btn btn-primary" href ng-click="wiz.goto(2)">Next &raquo;</a>
 			</li>
+
 			<li ng-show="wiz.robot.hasDrivetrain == 'yes'">
-				<!-- Yes -->
-				How many motors does it use?
-				<div class="radio">
-					<label>
-						<input type="radio" ng-model="wiz.robot.numMotors" value="2" required>
-						2 motors
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" ng-model="wiz.robot.numMotors" value="4">
-						4 motors (also for 6 or 8 wheel drive)
-					</label>
-				</div>
-				<!-- <div class="radio">
-					<label>
-						<input type="radio" ng-model="wiz.robot.numMotors" value="6">
-						6 motors
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" ng-model="wiz.robot.numMotors" value="8">
-						8 motors
-					</label>
-				</div> -->
-			</li>
-			<li ng-show="wiz.robot.numMotors && wiz.robot.hasDrivetrain == 'yes'">
 				What type of motor controllers will be used?
 				<div class="form-group" >
 					<select ng-model="wiz.robot.speedController" class="form-control form-control-inline" required>
@@ -63,7 +36,25 @@
 
 				</div>
 			</li>
+
 			<li ng-show="wiz.robot.speedController && wiz.robot.hasDrivetrain == 'yes'">
+				<!-- Yes -->
+				How many motors does it use?
+				<div class="radio">
+					<label>
+						<input type="radio" ng-model="wiz.robot.numMotors" value="2" required ng-change="wiz.step1.numMotorsChange()">
+						2 motors
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" ng-model="wiz.robot.numMotors" value="4">
+						4 motors (also for 6 or 8 wheel drive)
+					</label>
+				</div>
+			</li>
+
+			<li ng-show="wiz.robot.numMotors && wiz.robot.hasDrivetrain == 'yes'">
 				What type of driving will you be doing?
 				<div class="radio">
 					<label>
@@ -93,9 +84,27 @@
 						<th>Type</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="(ctrl_idx, ctrl_name) in wiz.step1.getControllerNames()">
+						<tr ng-repeat="controller in wiz.robot.controllers">
+							<td>
+								<input ng-model="controller.name" required class="form-control form-control-inline" type="text">
+							</td>
+							<td>
+								<select ng-model="controller.port" required class="form-control form-control-inline">
+								<option value="">Choose a port</option>
+								<option
+									value="{{idx}}"
+									ng-repeat="(idx, name) in wiz.step1.getPWM()"
+									ng-disabled="wiz.step1.isPWMUsed(idx)">
+								{{idx}} {{wiz.step1.isPWMUsed(idx)? 'used' : ''}}</option>
+								</select>
+							</td>
+							<td>
+								?
+							</td>
+						</tr>
+						<!-- <tr ng-repeat="(ctrl_idx, ctrl_name) in wiz.step1.getControllerNames()">
 						{{ctrl_idx}} {{ctrl_name}}
-							<!-- <td>
+							<td>
 							<input required class="form-control form-control-inline" type="text" ng-model="wiz.robot.controllers[ctrl_idx].name">
 						</td>
 							<td>
@@ -110,8 +119,8 @@
 							</td>
 							<td>
 								?
-							</td> -->
-						</tr>
+							</td>
+						</tr> -->
 					</tbody>
 				</table>
 			</li>

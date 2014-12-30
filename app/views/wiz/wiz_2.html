@@ -24,15 +24,15 @@
 
 				<table class="table">
 					<thead>
-						<th>Name</th>
+						<th>Solenoid Name</th>
 						<th>PCM Port</th>
-						<th>Type</th>
+						<th>Solenoid Type</th>
 						<th>Action</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="(idx, item) in wiz.step2.getSolenoids()">
+						<tr ng-repeat="(idx, item) in wiz.robot.solenoids">
 							<td>
-								<input ng-model="item.name" type="text" class="form-control form-control-inline">
+								<input ng-model="item.name" required type="text" class="form-control form-control-inline">
 							</td>
 							<td>
 								<select ng-model="item.port" required class="pa form-control form-control-inline" >
@@ -45,7 +45,7 @@
 								</select>
 							</td>
 							<td>
-								<select ng-model="item.type" class="form-control form-control-inline">
+								<select ng-model="item.type" required class="form-control form-control-inline">
 									<option value="">Choose a Solenoid type</option>
 									<option value="single">Single Solenoid (Spring return)</option>
 									<option value="double">Dobule Solenoid (Stays in place)</option>
@@ -93,6 +93,5 @@
 		<pre>
 {{wiz.robot | json:4}}
 		</pre>
-		{{wiz.step1.getControllerNames()}}
 	</div>
 </div>

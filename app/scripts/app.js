@@ -24,7 +24,7 @@ angular
   //     $rootScope.isIDE = false;
   // })
   .config(function ($stateProvider, $urlRouterProvider) {
-
+  	// $urlRouterProvider.when('/wizard', '/wizard/1');
 	$stateProvider
 
 	  .state('index', {
@@ -51,7 +51,7 @@ angular
 			return 'views/wiz/wiz_'+$stateParams.step+'.html';
 		},
 	  });
-
+	  
 	  $urlRouterProvider.otherwise('/');
   });
 

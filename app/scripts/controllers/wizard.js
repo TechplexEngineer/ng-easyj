@@ -16,14 +16,16 @@ angular.module('ngEasyjApp')
 			numSol: 8,
 		};
 		var EMPTY_SOL = {name:'',port:'',type:''};
+		var EMPTY_CON = {name:'',port:'',type:''};
 
 		wiz.robot = {
 			//step 1
 			hasDrivetrain: undefined,
 			numMotors: undefined,
+			// numMotorsPrev: undefined,
 			speedController: undefined,
 			driveType: undefined,
-			controllers: {},
+			controllers: [],
 			//step 2
 			solenoids: [_.clone(EMPTY_SOL)],
 			hasPneumatics: undefined,
@@ -31,9 +33,9 @@ angular.module('ngEasyjApp')
 		// wiz.controllers = {};
 		// wiz.solenoids = {};
 
-		if (!$stateParams.step) {
-			$window.location.href = '#/wizard/1';
-		}
+		// if (!$stateParams.step) {
+		// 	$window.location.href = '#/wizard/1';
+		// }
 		wiz.step = $stateParams.step || 1;
 
 		wiz.isStep = function(s) {
@@ -93,11 +95,28 @@ angular.module('ngEasyjApp')
 			return out;
 		};
 
+		wiz.step1.numMotorsChange = function (){
+
+			var controllers = [];
+			if (wiz.robot.numMotors == 2) {
+				controllers = ['left','right'];
+			} else if (wiz.robot.numMotors == 4) {
+				controllers = ['frontLeft','rearLeft','frontRight','rearRight'];
+			}
+			// else if (wiz.robot.numMotors == 6) {
+			// 	controllers = ['frontLeft','midLeft','rearLeft','frontRight','midRight','rearRight'];
+			// }
+			for (var i = 0; i < controllers.length; i++) {
+				var con = _.clone(EMPTY_CON);
+				con.name = controllers[i];
+				con.type = wiz.robot.speedController;
+				wiz.robot.controllers.push(con);
+			}
+
+		};
+
 		//----------------------------------------------------------------------
 		wiz.step2 = {};
-		wiz.step2.getSolenoids = function() {
-			return wiz.robot.solenoids;
-		};
 		wiz.step2.isSolPortUsed = function(n) {
 			var out = false;
 			for (var property in wiz.robot.solenoids) {
@@ -114,23 +133,17 @@ angular.module('ngEasyjApp')
 			return _.range(0, wiz.brain.numSol);
 		};
 
-		wiz.step2.getNumSolenoids = function() {
-			var num = _.size(wiz.robot.solenoids);
-			if (num < wiz.brain.numSol) {
-				num ++;
-			}
-			return _.range(0, num);
-		};
 		wiz.step2.addSolenoid = function() {
-			wiz.robot.solenoids.push(_.clone(EMPTY_SOL));
-		};
+			if (wiz.robot.solenoids.length < wiz.brain.numSol) {
+				wiz.robot.solenoids.push(_.clone(EMPTY_SOL));
+			}
 
+		};
 		wiz.step2.removeSolenoid = function(item) {
 			wiz.robot.solenoids = wiz.robot.solenoids.filter(function(el){
 				return el !== item;
 			})
 		};
-		
 
 
 	});
