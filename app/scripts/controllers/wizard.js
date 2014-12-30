@@ -12,9 +12,28 @@ angular.module('ngEasyjApp')
 		var wiz = this;
 		//constants for the RoboRio controller
 		wiz.brain = {
-			numPWM: 10
+			numPWM: 10,
+			numSol: 8,
 		};
-		wiz.controllers = {};
+
+		wiz.robot = {
+			//step 1
+			hasDrivetrain: undefined,
+			numMotors: undefined,
+			speedController: undefined,
+			driveType: undefined,
+			controllers: {},
+			//step 2
+			solenoids: [
+				{
+					name:'',
+					port:'',
+					type:''
+				}],
+			hasPneumatics: undefined,
+		}
+		// wiz.controllers = {};
+		// wiz.solenoids = {};
 
 		if (!$stateParams.step) {
 			$window.location.href = '#/wizard/1';
@@ -37,40 +56,83 @@ angular.module('ngEasyjApp')
 			return out;
 		};
 
-		wiz.next = function() {
-			wiz.step ++;
+		// wiz.next = function() {
+		// 	wiz.step ++;
+		// 	$window.location.href = '#/wizard/'+wiz.step;
+		// };
+
+		wiz.goto = function(s) {
+			wiz.step = s
 			$window.location.href = '#/wizard/'+wiz.step;
 		};
-		wiz.getControllers = function() {
+
+		//----------------------------------------------------------------------
+		wiz.step1 = {};
+
+		wiz.step1.getControllerNames = function() {
 			var out = [];
-			if (wiz.numMotors == 2) {
+			if (wiz.robot.numMotors == 2) {
 				out = ['left','right'];
-			} else if (wiz.numMotors == 4) {
+			} else if (wiz.robot.numMotors == 4) {
 				out = ['frontLeft','rearLeft','frontRight','rearRight'];
-			} else if (wiz.numMotors == 6) {
+			} else if (wiz.robot.numMotors == 6) {
 				out = ['frontLeft','midLeft','rearLeft','frontRight','midRight','rearRight'];
 			}
 			return out;
 		};
-		wiz.isPADisabled = function(n) {
+		wiz.step1.getPWM = function() {
+			return _.range(0, wiz.brain.numPWM);
+		};
+
+		wiz.step1.isPWMUsed = function(n) {
 			var out = false;
-			for (var property in wiz.controllers) {
-				if (wiz.controllers.hasOwnProperty(property)) {
-					// console.log(wiz.controllers[property] == n);
-					if (wiz.controllers[property] == n) {
+			for (var property in wiz.robot.controllers) {
+				if (wiz.robot.controllers.hasOwnProperty(property)) {
+					if (wiz.robot.controllers[property] == n) {
 						out = true;
 						break;
 					}
 				}
 			}
-			// for (var i = 0; i < wiz.controllers.length; i++) {
-			// 	console.log(wiz.controllers[i]);
-			// 	if (wiz.controllers[i] == n)
-			// 		out = true;
-			// 		break;
-			// };
 			return out;
+		};
 
-		}
+		//----------------------------------------------------------------------
+		wiz.step2 = {};
+		wiz.step2.getSolenoids = function() {
+			return wiz.robot.solenoids;
+		};
+		wiz.step2.isSolPortUsed = function(n) {
+			var out = false;
+			for (var property in wiz.robot.solenoids) {
+				if (wiz.robot.solenoids.hasOwnProperty(property)) {
+					if (wiz.robot.solenoids[property] == n) {
+						out = true;
+						break;
+					}
+				}
+			}
+			return out;
+		};
+		wiz.step2.getNumSolPorts = function() {
+			return _.range(0, wiz.brain.numSol);
+		};
+
+		wiz.step2.getNumSolenoids = function() {
+			var num = _.size(wiz.robot.solenoids);
+			if (num < wiz.brain.numSol) {
+				num ++;
+			}
+			return _.range(0, num);
+		};
+		wiz.step2.addSolenoid = function() {
+			wiz.robot.solenoids['changeme'] = "";
+		};
+
+		wiz.step2.removeSolenoid = function() {
+			//@todo
+		};
+		
+
 
 	});

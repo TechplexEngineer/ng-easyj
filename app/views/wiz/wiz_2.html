@@ -1,5 +1,90 @@
-2
-<ul>
-	<li>{{wiz.hasDrivetrain}}</li>
-	<li>{{wiz.numWheels}} </li>
-</ul>
+<h1>Outputs</h1>
+<div class="row">
+	<form name="outputs" novalidate>
+		<ol class="col-lg-4">
+
+			<li>
+				Does your robot use <abbr title="air pressure">pneumatics</abbr>?
+				<div class="radio">
+					<label>
+						<input type="radio" ng-model="wiz.robot.hasPneumatics" value="yes">
+						Yes!
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" ng-model="wiz.robot.hasPneumatics" value="no" required>
+						No.
+					</label>
+				</div>
+			</li>
+			<li>
+				What solenoids(pneumatic valves) are connected to your <abbr title="Pneumatic Control Module">PCM</abbr>?
+				<table class="table">
+					<thead>
+						<th>Name</th>
+						<th>Port</th>
+						<th>Type</th>
+						<th>Action</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(idx, item) in wiz.step2.getSolenoids()">
+							<td>
+								<input ng-model="item.name" type="text" class="form-control form-control-inline">
+							</td>
+							<td>
+								<select ng-model="item.port" required class="pa form-control form-control-inline" >
+									<option value="">Choose a port</option>
+									<option
+										value="{{idx}}"
+										ng-repeat="(idx, name) in wiz.step2.getNumSolPorts()"
+										ng-disabled="wiz.step2.isSolPortUsed(idx)">
+									{{idx}} {{wiz.step2.isSolUsed(idx)? 'used' : ''}}</option>
+								</select>
+							</td>
+							<td>
+								<select ng-model="item.type" class="form-control form-control-inline">
+									<option value="single">Single Solenoid (Spring return)</option>
+									<option value="double">Dobule Solenoid (Stays in place)</option>
+								</select>
+							</td>
+							<td>
+								<button ng-hide="$first && wiz.robot.solenoids.length < 2" ng-click="wiz.step2.removeSolenoid(item)" class="btn btn-danger" >Remove</button>
+							</td>
+						</tr>
+
+
+
+						<tr ng-repeat="(sol_idx, name) in wiz.step2.getNumSolenoids()" ng-show="false">
+							<td>
+								<input type="text" class="form-control form-control-inline" value="{{name}}">
+							</td>
+							<td>
+								<select required class="pa form-control form-control-inline" ng-model="wiz.robot.solenoids[name]">
+									<option value="">Choose a port</option>
+									<option
+										value="{{idx}}"
+										ng-repeat="(idx, name) in wiz.step2.getNumSolPorts()"
+										ng-disabled="wiz.step2.isSolPortUsed(idx)">
+									{{idx}} {{wiz.step2.isSolUsed(idx)? 'used' : ''}}</option>
+								</select>
+							</td>
+							<td>
+								<select class="form-control form-control-inline">
+									<option value="single">Single Solenoid (Spring return)</option>
+									<option value="double">Dobule Solenoid (Stays in place)</option>
+								</select>
+							</td>
+							<td>
+								<button class="btn btn-danger" ng-click="wiz.step2.removeSolenoid(sol_name)">Remove</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
+			<li>
+				{{wiz.robot}}
+			</li>
+		</ol>
+	</form>
+</div>
