@@ -32,7 +32,8 @@ angular.module('ngEasyjApp')
 		var EMPTY_HID = _.clone(EMPTY_SOL);
 		var EMPTY_AIO = _.clone(EMPTY_SOL);
 		var EMPTY_DIO = _.clone(EMPTY_SOL);
-		var EMPTY_SUB = {name:'',actions:[]};
+		var EMPTY_SUB = {name:'', actions:[]};
+		var EMPTY_CMD = {name:'', requires:[]};
 
 		//the data about the user's robot stored here
 		wiz.robot = {
@@ -53,7 +54,11 @@ angular.module('ngEasyjApp')
 				digital: [],
 			},
 			// This really should be conditional based on the users earlier selected pref
-			subsystems:[{name:'Drivetrain',actions:['drive','turn','drive with hid']}]
+			subsystems:[{name:'Drivetrain',actions:['drive','turn','drive with hid']}],
+
+			commands:[{"name": "ArcadeDrive","requires": ["Drivetrain"],"type": "cmd"}],
+
+
 		};
 
 		// if (!$stateParams.step) {
@@ -239,6 +244,18 @@ angular.module('ngEasyjApp')
 		};
 		wiz.step4.removeSubsystem = function(item) {
 			wiz.robot.subsystems = wiz.robot.subsystems.filter(function(el){
+				return el !== item;
+			});
+		};
+
+		//----------------------------------------------------------------------
+		wiz.step5 = {};
+		wiz.step5.addCommand = function() {
+			wiz.robot.commands.push(_.clone(EMPTY_CMD));
+
+		};
+		wiz.step5.removeCommand = function(item) {
+			wiz.robot.commands = wiz.robot.commands.filter(function(el){
 				return el !== item;
 			});
 		};

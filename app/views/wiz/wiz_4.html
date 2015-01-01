@@ -4,7 +4,7 @@
 		<ol class="col-lg-6">
 			<li>
 				<button ng-click="wiz.step4.addSubsystem()" class="btn btn-success pull-right">Add</button>
-				User Input configuration (Operator Interface)
+				Subsystem configuration
 				<table class="table">
 					<thead>
 						<th>Name</th>
@@ -23,8 +23,8 @@
 								</p>
 							</td>
 							<td>
-								<button ng-hide="$first && wiz.robot.subsystems.length < 2" ng-click="wiz.step4.removeHID(item)" class="btn btn-danger" >Remove</button>
-
+								<button ng-hide="$first && wiz.robot.subsystems.length < 2" ng-click="wiz.step4.removeSubsystem(item)" class="btn btn-danger" >Remove</button>
+								<!-- <p ng-show="$first && wiz.robot.subsystems.length < 2">You must have at least one subsystem.</p> -->
 							</td>
 						</tr>
 					</tbody>
@@ -36,4 +36,10 @@
 			</li>
 		</ol>
 	</form>
+	<div class="col-lg-4">
+		<h4>debugging info:</h4>
+		<pre>
+{{wiz.robot | json:4}}
+		</pre>
+	</div>
 </div>
