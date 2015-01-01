@@ -2,7 +2,34 @@
 <div class="row">
 	<form name="subsystems" novalidate>
 		<ol class="col-lg-6">
-			<li>4</li>
+			<li>
+				<button ng-click="wiz.step4.addSubsystem()" class="btn btn-success pull-right">Add</button>
+				User Input configuration (Operator Interface)
+				<table class="table">
+					<thead>
+						<th>Name</th>
+						<th>Actions</th>
+						<th>Action</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(idx, item) in wiz.robot.subsystems">
+							<td>
+								<input ng-model="item.name" required type="text" class="form-control form-control-inline">
+							</td>
+
+							<td>
+								<p ng-repeat="action in item.actions">
+								{{action}}
+								</p>
+							</td>
+							<td>
+								<button ng-hide="$first && wiz.robot.subsystems.length < 2" ng-click="wiz.step4.removeHID(item)" class="btn btn-danger" >Remove</button>
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
 			<li ng-show="subsystems.$valid">
 				<!-- Done -->
 				<a class="btn btn-primary" href ng-click="wiz.goto(5)">Next &raquo;</a>

@@ -1,6 +1,7 @@
 'use strict';
 
 //@todo check names to make sure they are java safe (can't start with a number)
+//@todo tow way data binding not working on select ports options
 
 /**
  * @ngdoc function
@@ -31,6 +32,7 @@ angular.module('ngEasyjApp')
 		var EMPTY_HID = _.clone(EMPTY_SOL);
 		var EMPTY_AIO = _.clone(EMPTY_SOL);
 		var EMPTY_DIO = _.clone(EMPTY_SOL);
+		var EMPTY_SUB = {name:'',actions:[]};
 
 		//the data about the user's robot stored here
 		wiz.robot = {
@@ -49,7 +51,9 @@ angular.module('ngEasyjApp')
 			sensors:{
 				analog: [],
 				digital: [],
-			}
+			},
+			// This really should be conditional based on the users earlier selected pref
+			subsystems:[{name:'Drivetrain',actions:['drive','turn','drive with hid']}]
 		};
 
 		// if (!$stateParams.step) {
@@ -223,6 +227,18 @@ angular.module('ngEasyjApp')
 		};
 		wiz.step3.removeDigitalSensor = function(item) {
 			wiz.robot.sensors.digital = wiz.robot.sensors.digital.filter(function(el){
+				return el !== item;
+			});
+		};
+
+		//----------------------------------------------------------------------
+		wiz.step4 = {};
+		wiz.step4.addSubsystem = function() {
+			wiz.robot.subsystems.push(_.clone(EMPTY_SUB));
+
+		};
+		wiz.step4.removeSubsystem = function(item) {
+			wiz.robot.subsystems = wiz.robot.subsystems.filter(function(el){
 				return el !== item;
 			});
 		};
