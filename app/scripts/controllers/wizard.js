@@ -252,12 +252,18 @@ angular.module('ngEasyjApp')
 		wiz.step5 = {};
 		wiz.step5.addCommand = function() {
 			wiz.robot.commands.push(_.clone(EMPTY_CMD));
-
 		};
 		wiz.step5.removeCommand = function(item) {
 			wiz.robot.commands = wiz.robot.commands.filter(function(el){
 				return el !== item;
 			});
+		};
+		wiz.step5.addRequires = function(cmd) {
+			if (cmd.requires.length < wiz.robot.subsystems.length
+				&& _.indexOf(cmd.requires, "") == -1 ) {//not in list
+				cmd.requires.push("");
+			}
+
 		};
 
 	});

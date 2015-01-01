@@ -27,11 +27,11 @@
 							</td>
 
 							<td>
-								<select ng-model="req" ng-repeat="req in item.requires" ng-if="item.type == 'cmd'">
-									<option value="">None</option>
+								<select ng-model="item.requires" ng-repeat="req in item.requires" ng-if="item.type == 'cmd'">
+									<option value="-n-">None</option>
 									<option value="{{subsystem.name}}" ng-repeat="subsystem in wiz.robot.subsystems">{{subsystem.name}}</option>
 								</select>
-								<button class="btn btn-sm">Add</button>
+								<button ng-click="wiz.step5.addRequires(item)" class="btn btn-xs">Add</button>
 							</td>
 
 							<td>
