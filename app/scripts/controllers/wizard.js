@@ -56,7 +56,7 @@ angular.module('ngEasyjApp')
 			// This really should be conditional based on the users earlier selected pref
 			subsystems:[{name:'Drivetrain',actions:['drive','turn','drive with hid']}],
 
-			commands:[{"name": "ArcadeDrive","requires": ["Drivetrain"],"type": "cmd"}],
+			commands:[{name: "ArcadeDrive",requires: ["Drivetrain"],type: "cmd"}],
 
 
 		};
