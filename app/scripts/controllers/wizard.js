@@ -56,7 +56,7 @@ angular.module('ngEasyjApp')
 			// This really should be conditional based on the users earlier selected pref
 			subsystems:[{name:'Drivetrain',actions:['drive','turn','drive with hid']}],
 
-			commands:[{name: "ArcadeDrive",requires: ["Drivetrain"],type: "cmd"}],
+			commands:[{name: 'ArcadeDrive',requires: ['Drivetrain'],type: 'cmd'}],
 
 
 		};
@@ -86,6 +86,7 @@ angular.module('ngEasyjApp')
 		wiz.goto = function(s) {
 			wiz.step = s;
 			$window.location.href = '#/wizard/'+wiz.step;
+			document.body.scrollTop = document.documentElement.scrollTop = 0;
 		};
 
 		//----------------------------------------------------------------------
@@ -259,9 +260,9 @@ angular.module('ngEasyjApp')
 			});
 		};
 		wiz.step5.addRequires = function(cmd) {
-			if (cmd.requires.length < wiz.robot.subsystems.length
-				&& _.indexOf(cmd.requires, "") == -1 ) {//not in list
-				cmd.requires.push("");
+			if (cmd.requires.length < wiz.robot.subsystems.length &&
+			 _.indexOf(cmd.requires, '') == -1 ) {//not in list
+				cmd.requires.push('');
 			}
 
 		};
