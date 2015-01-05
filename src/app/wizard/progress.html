@@ -1,0 +1,56 @@
+
+<div class="container-fluid">
+
+	<!-- Based on code from: http://bootsnipp.com/snippets/featured/form-process-steps -->
+	<div class="row bs-wizard" style="border-bottom:0;" ng-controller="ProgressCtrl as prog">
+		<div class="col-xs-2 bs-wizard-step" ng-class="prog.getClass(1)">
+			<div class="text-center bs-wizard-stepnum">Step 1</div>
+			<div class="progress"><div class="progress-bar"></div></div>
+			<a href="#/wizard/1" class="bs-wizard-dot"></a>
+			<div class="bs-wizard-info text-center">Drivetrain</div>
+		</div>
+
+		<div class="col-xs-2 bs-wizard-step" ng-class="prog.getClass(2)"><!-- complete -->
+			<div class="text-center bs-wizard-stepnum">Step 2</div>
+			<div class="progress"><div class="progress-bar"></div></div>
+			<a href="#/wizard/2" class="bs-wizard-dot"></a>
+			<div class="bs-wizard-info text-center">Outputs (Actuators)</div>
+		</div>
+
+		<div class="col-xs-2 bs-wizard-step" ng-class="prog.getClass(3)"><!-- complete -->
+			<div class="text-center bs-wizard-stepnum">Step 3</div>
+			<div class="progress"><div class="progress-bar"></div></div>
+			<a href="#/wizard/3" class="bs-wizard-dot"></a>
+			<div class="bs-wizard-info text-center">Inputs (Sensors + Operator Interface)</div>
+		</div>
+
+		<div class="col-xs-2 bs-wizard-step" ng-class="prog.getClass(4)"><!-- active -->
+			<div class="text-center bs-wizard-stepnum">Step 4</div>
+			<div class="progress"><div class="progress-bar"></div></div>
+			<a href="#/wizard/4" class="bs-wizard-dot"></a>
+			<div class="bs-wizard-info text-center">Subsystems</div>
+		</div>
+
+		<div class="col-xs-2 bs-wizard-step" ng-class="prog.getClass(5)"><!-- active -->
+			<div class="text-center bs-wizard-stepnum">Step 5</div>
+			<div class="progress"><div class="progress-bar"></div></div>
+			<a href="#/wizard/5" class="bs-wizard-dot"></a>
+			<div class="bs-wizard-info text-center">Commands</div>
+		</div>
+
+		<div class="col-xs-2 bs-wizard-step" ng-class="prog.getClass(6)"><!-- active -->
+			<div class="text-center bs-wizard-stepnum">Step 6</div>
+			<div class="progress"><div class="progress-bar"></div></div>
+			<a href="#/wizard/6" class="bs-wizard-dot"></a>
+			<div class="bs-wizard-info text-center">Code</div>
+		</div>
+	</div>
+
+	<!-- <div class="steps" ui-view>
+		<h1>Welcome to the EasyJ Wizard</h1>
+		<p>This wizard will guide you through the process of creating your robot code.</p>
+		<a class="btn btn-primary" href ng-click="wiz.goto(1)">Begin</a>
+	</div> -->
+  <div class="steps" ng-include="app/wizard/wiz_1.html">
+  </div>
+</div>

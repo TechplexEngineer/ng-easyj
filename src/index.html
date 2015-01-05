@@ -2,17 +2,17 @@
 <html class="no-js" ng-app="easyj">
   <head>
     <meta charset="utf-8">
-    <title>easyj</title>
+    <title>EasyJ Robot Builder v2</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    
+
     <!-- build:css({.tmp,src}) styles/vendor.css -->
     <link rel="stylesheet" href="app/vendor.css">
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-    
+
 
     <!-- build:css({.tmp,src}) styles/app.css -->
     <!-- inject:css -->
@@ -29,7 +29,11 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div ng-view></div>
+    <div ng-include="'components/navbar/navbar.html'"></div>
+
+    <div ng-view class="content"></div>
+
+    <div ng-include="'components/footer/footer.html'"></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
@@ -59,7 +63,14 @@
     <!-- inject:js -->
     <script src="app/index.js"></script>
     <script src="components/navbar/navbar.controller.js"></script>
+    <script src="components/footer/footer.c.js"></script>
+    <script src="app/wizard/routes.js"></script>
+    <script src="app/wizard/wiz1.c.js"></script>
+    <script src="app/wizard/robotlimits.f.js"></script>
+    <script src="app/wizard/robotdata.f.js"></script>
+    <script src="app/wizard/progress.c.js"></script>
     <script src="app/main/main.controller.js"></script>
+    <script src="app/index/index.c.js"></script>
     <!-- endinject -->
 
     <!-- inject:partials -->

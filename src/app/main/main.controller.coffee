@@ -67,6 +67,13 @@ angular.module "easyj"
         'url': 'http://jade-lang.com/',
         'description': 'Jade is a high performance template engine heavily influenced by Haml and implemented with JavaScript for node.',
         'logo': 'jade.png'
+      },
+      {
+        'key': 'blockly',
+        'title': 'Blockly',
+        'url': 'https://developers.google.com/blockly/',
+        'description': 'Blockly is a library for building visual programming editors.',
+        'logo': 'blockly.png'
       }
     ]
     angular.forEach $scope.awesomeThings, (awesomeThing) ->

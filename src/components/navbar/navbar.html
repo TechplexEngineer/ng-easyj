@@ -1,16 +1,22 @@
-<nav class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarCtrl">
+<nav class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarCtrl as nav">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="https://github.com/Swiip/generator-gulp-angular">
-        <span class="glyphicon glyphicon-home"></span> Gulp Angular
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#about" data-toggle="modal">
+        <img src="assets/images/easyj4frc.png" height="40px" style="margin-top: -10px;">
       </a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
       <ul class="nav navbar-nav">
-        <li class="active"><a ng-href="#">Home</a></li>
-        <li><a ng-href="#">About</a></li>
-        <li><a ng-href="#">Contact</a></li>
+        <li ng-class="{ active: nav.isActive('/')}"><a ng-href="#/">Home</a></li>
+        <li ng-class="{ active: nav.isActive('/about')}"><a ng-href="#/about">About</a></li>
+        <li ng-class="{ active: nav.isActive('/contact')}"><a ng-href="#/">Contact</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
